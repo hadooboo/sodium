@@ -11,6 +11,13 @@ module.exports = {
     label: './examples/label.ts',
     reverse: './examples/reverse.ts',
     gamechat: './examples/gamechat.ts',
+    redgreen: './examples/redgreen.ts',
+    translate: './examples/translate.ts',
+    spinner: './examples/spinner.ts',
+    nonegative: './examples/nonegative.ts',
+    add: './examples/add.ts',
+    spinme: './examples/spinme.ts',
+    formvalidation: './examples/formvalidation.ts',
   },
   devtool: 'inline-source-map',
   module: {
@@ -63,6 +70,41 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'gamechat.html',
       chunks: ['gamechat'],
+      template: './src/example.html',
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'redgreen.html',
+      chunks: ['redgreen'],
+      template: './src/example.html',
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'translate.html',
+      chunks: ['translate'],
+      template: './src/example.html',
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'spinner.html',
+      chunks: ['spinner'],
+      template: './src/example.html',
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'nonegative.html',
+      chunks: ['nonegative'],
+      template: './src/example.html',
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'add.html',
+      chunks: ['add'],
+      template: './src/example.html',
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'spinme.html',
+      chunks: ['spinme'],
+      template: './src/example.html',
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'formvalidation.html',
+      chunks: ['formvalidation'],
       template: './src/example.html',
     }),
   ],

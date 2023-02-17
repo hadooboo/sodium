@@ -20,7 +20,7 @@ class SButton {
       sClickedSink.send(Unit.UNIT);
     });
 
-    Transaction.currentTransaction.post(-1, () => {
+    Transaction.currentTransaction.post(0, () => {
       this.button.disabled = !enabled.sample();
     });
     Operational.updates(enabled).listen(b => {

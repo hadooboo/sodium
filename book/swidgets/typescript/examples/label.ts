@@ -8,6 +8,7 @@ class Label {
     const lbl = new SLabel({text: msg.text});
 
     msg.render();
+    document.body.appendChild(document.createElement('div'));
     lbl.render();
   }
 }

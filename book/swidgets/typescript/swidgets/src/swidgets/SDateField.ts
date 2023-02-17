@@ -38,9 +38,7 @@ class SDateField {
     this.date = this.yearComboBox.selectedItem.lift3(
       monthIndex,
       this.dayComboBox.selectedItem,
-      (oy, om, od) => {
-        return new Date(oy, om, od);
-      }
+      (oy, om, od) => new Date(oy, om, od)
     );
   }
 

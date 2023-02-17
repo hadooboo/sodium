@@ -10,7 +10,9 @@ class Airline1 {
     const ok = new SButton({label: 'OK', enabled: valid});
 
     dep.render();
+    document.body.appendChild(document.createElement('div'));
     ret.render();
+    document.body.appendChild(document.createElement('div'));
     ok.render();
   }
 }

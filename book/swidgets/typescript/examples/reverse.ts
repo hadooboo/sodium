@@ -9,6 +9,7 @@ class Reverse {
     const lbl = new SLabel({text: reversed});
 
     msg.render();
+    document.body.appendChild(document.createElement('div'));
     lbl.render();
   }
 

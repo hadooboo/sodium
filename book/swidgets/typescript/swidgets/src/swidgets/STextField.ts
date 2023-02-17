@@ -33,7 +33,7 @@ class STextField {
       this.textField.value = text;
     });
 
-    Transaction.currentTransaction.post(-1, () => {
+    Transaction.currentTransaction.post(0, () => {
       this.textField.disabled = !enabled.sample();
     });
     Operational.updates(enabled).listen(b => {
