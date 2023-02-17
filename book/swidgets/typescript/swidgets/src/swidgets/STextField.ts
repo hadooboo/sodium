@@ -6,11 +6,14 @@ class STextField {
   public sUserChanges: Stream<string>;
 
   constructor({
-    initText, width, sText = new Stream<string>(), enabled = new Cell<boolean>(true)
+    sText = new Stream<string>(),
+    initText,
+    width,
+    enabled = new Cell<boolean>(true)
   } : {
+    sText?: Stream<string>,
     initText: string,
     width?: number,
-    sText?: Stream<string>,
     enabled?: Cell<boolean>
   }) {
     const sUserChangesSnk = new StreamSink<string>();

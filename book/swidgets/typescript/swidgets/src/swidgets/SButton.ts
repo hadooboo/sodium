@@ -5,7 +5,8 @@ class SButton {
   public sClicked: Stream<Unit>;
 
   constructor({
-    label, enabled = new Cell<boolean>(true)
+    label,
+    enabled = new Cell<boolean>(true)
   } : {
     label: string,
     enabled?: Cell<boolean>
