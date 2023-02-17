@@ -7,9 +7,9 @@ class Label {
     const msg = new STextField({initText: 'Hello'});
     const lbl = new SLabel({text: msg.text});
 
-    msg.render();
+    document.body.appendChild(msg.getHTMLElement());
     document.body.appendChild(document.createElement('div'));
-    lbl.render();
+    document.body.appendChild(lbl.getHTMLElement());
   }
 }
 

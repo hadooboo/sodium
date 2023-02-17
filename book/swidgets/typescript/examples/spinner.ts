@@ -14,9 +14,9 @@ class Spinner {
     const sUpdate = sDelta.snapshot(value, (delta, value_) => delta + value_);
     value.loop(sUpdate.hold(0));
 
-    lblValue.render();
-    plus.render();
-    minus.render();
+    document.body.appendChild(lblValue.getHTMLElement());
+    document.body.appendChild(plus.getHTMLElement());
+    document.body.appendChild(minus.getHTMLElement());
   }
 }
 

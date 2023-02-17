@@ -13,10 +13,10 @@ class Translate {
     const latin = sLatin.hold('');
     const lblLatin = new SLabel({text: latin});
 
-    english.render();
-    translate.render();
+    document.body.appendChild(english.getHTMLElement());
+    document.body.appendChild(translate.getHTMLElement());
     document.body.appendChild(document.createElement('div'));
-    lblLatin.render();
+    document.body.appendChild(lblLatin.getHTMLElement());
   }
 }
 

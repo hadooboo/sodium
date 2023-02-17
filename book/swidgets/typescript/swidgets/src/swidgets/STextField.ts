@@ -41,8 +41,8 @@ class STextField {
     });
   }
 
-  render() {
-    document.body.appendChild(this.textField);
+  getHTMLElement(): HTMLElement {
+    return this.textField;
   }
 }
 

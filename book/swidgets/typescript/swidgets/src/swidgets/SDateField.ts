@@ -42,10 +42,12 @@ class SDateField {
     );
   }
 
-  render() {
-    this.yearComboBox.render();
-    this.monthComboBox.render();
-    this.dayComboBox.render();
+  getHTMLElement(): HTMLElement {
+    const div = document.createElement('div');
+    div.appendChild(this.yearComboBox.getHTMLElement());
+    div.appendChild(this.monthComboBox.getHTMLElement());
+    div.appendChild(this.dayComboBox.getHTMLElement());
+    return div;
   }
 }
 

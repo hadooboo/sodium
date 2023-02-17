@@ -11,10 +11,10 @@ class Add {
     const sum = a.lift(b, (a_, b_) => a_ + b_);
     const lblSum = new SLabel({text: sum.map(n => n.toString())});
 
-    txtA.render();
-    txtB.render();
+    document.body.appendChild(txtA.getHTMLElement());
+    document.body.appendChild(txtB.getHTMLElement());
     document.body.appendChild(document.createElement('div'));
-    lblSum.render();
+    document.body.appendChild(lblSum.getHTMLElement());
   }
 }
 

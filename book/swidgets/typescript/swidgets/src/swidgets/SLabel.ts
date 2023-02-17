@@ -1,25 +1,25 @@
 import { Cell, Operational, Transaction } from "sodiumjs";
 
 class SLabel {
-  private div: HTMLSpanElement;
+  private span: HTMLSpanElement;
 
   constructor({
     text
   } : {
     text: Cell<string>
   }) {
-    this.div = document.createElement('span');
+    this.span = document.createElement('span');
 
     Transaction.currentTransaction.post(0, () => {
-      this.div.innerText = text.sample();
+      this.span.innerText = text.sample();
     });
     Operational.updates(text).listen(t => {
-      this.div.innerText = t;
+      this.span.innerText = t;
     });
   }
 
-  render() {
-    document.body.appendChild(this.div);
+  getHTMLElement(): HTMLElement {
+    return this.span;
   }
 }
 

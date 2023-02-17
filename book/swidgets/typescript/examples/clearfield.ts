@@ -8,8 +8,8 @@ class ClearField {
     const sClearIt = clear.sClicked.map(u => '');
     const text = new STextField({sText: sClearIt, initText: 'Hello'});
 
-    text.render();
-    clear.render();
+    document.body.appendChild(text.getHTMLElement());
+    document.body.appendChild(clear.getHTMLElement());
   }
 }
 

@@ -35,11 +35,11 @@ class Airline2 {
     const valid = r.reify(dep.date, ret.date);
     const ok = new SButton({label: 'OK', enabled: valid});
 
-    dep.render();
+    document.body.appendChild(dep.getHTMLElement());
     document.body.appendChild(document.createElement('div'));
-    ret.render();
+    document.body.appendChild(ret.getHTMLElement());
     document.body.appendChild(document.createElement('div'));
-    ok.render();
+    document.body.appendChild(ok.getHTMLElement());
   }
 }
 

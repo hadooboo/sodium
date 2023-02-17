@@ -28,8 +28,8 @@ class SButton {
     });
   }
 
-  render() {
-    document.body.appendChild(this.button);
+  getHTMLElement(): HTMLElement {
+    return this.button;
   }
 }
 

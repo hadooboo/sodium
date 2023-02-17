@@ -21,9 +21,9 @@ class SSpinner {
     const plus = new SButton({label: '+'});
     const minus = new SButton({label: '-'});
 
-    textField.render();
-    plus.render();
-    minus.render();
+    document.body.appendChild(textField.getHTMLElement());
+    document.body.appendChild(plus.getHTMLElement());
+    document.body.appendChild(minus.getHTMLElement());
 
     const sPlusDelta = plus.sClicked.map(u => 1);
     const sMinusDelta = minus.sClicked.map(u => -1);

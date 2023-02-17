@@ -38,8 +38,8 @@ class SComboBox<E = string|number> {
     }
   }
 
-  render() {
-    document.body.appendChild(this.comboBox);
+  getHTMLElement(): HTMLElement {
+    return this.comboBox;
   }
 }
 

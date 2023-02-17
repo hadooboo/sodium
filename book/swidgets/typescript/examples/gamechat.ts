@@ -11,9 +11,9 @@ class GameChat {
     const sCanned = sOnegai.orElse(sThanks);
     const text = new STextField({sText: sCanned, initText: ''});
 
-    text.render();
-    onegai.render();
-    thanks.render();
+    document.body.appendChild(text.getHTMLElement());
+    document.body.appendChild(onegai.getHTMLElement());
+    document.body.appendChild(thanks.getHTMLElement());
   }
 }
 

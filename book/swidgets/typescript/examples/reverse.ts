@@ -8,9 +8,9 @@ class Reverse {
     const reversed = msg.text.map(t => this.reverse(t));
     const lbl = new SLabel({text: reversed});
 
-    msg.render();
+    document.body.appendChild(msg.getHTMLElement());
     document.body.appendChild(document.createElement('div'));
-    lbl.render();
+    document.body.appendChild(lbl.getHTMLElement());
   }
 
   static reverse(s: string): string {

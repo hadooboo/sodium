@@ -16,9 +16,9 @@ class FormValidation {
       name.text.map(t => t.trim() == ''            ? '<-- enter something' :
                          t.trim().indexOf(' ') < 0 ? '<-- must contain space' : '')
     );
-    name.render();
+    document.body.appendChild(name.getHTMLElement());
     const nameLabel = new SLabel({text: valids[0]});
-    nameLabel.render();
+    document.body.appendChild(nameLabel.getHTMLElement());
     document.body.appendChild(document.createElement('div'));
 
     const spinner = new SSpinner({initialValue: 1});
@@ -26,7 +26,7 @@ class FormValidation {
       spinner.value.map(n => n < 1 || n > maxEmails ? `<-- must be 1 to ${maxEmails}` : '')
     );
     const spinnerLabel = new SLabel({text: valids[1]});
-    spinnerLabel.render();
+    document.body.appendChild(spinnerLabel.getHTMLElement());
     document.body.appendChild(document.createElement('div'));
 
     for (let i = 0; i < maxEmails; i++) {
@@ -39,9 +39,9 @@ class FormValidation {
           e.indexOf('@') < 0 ? '<-- must contain @' : ''
         )
       );
-      email.render();
+      document.body.appendChild(email.getHTMLElement());
       const validLabel = new SLabel({text: valids[i + 2]});
-      validLabel.render();
+      document.body.appendChild(validLabel.getHTMLElement());
       document.body.appendChild(document.createElement('div'));
     }
 
@@ -52,7 +52,7 @@ class FormValidation {
     }
 
     const ok = new SButton({label: 'OK', enabled: allValid});
-    ok.render();
+    document.body.appendChild(ok.getHTMLElement());
   }
 }
 

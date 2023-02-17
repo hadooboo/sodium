@@ -12,10 +12,10 @@ class RedGreen {
     const color = sColor.hold('');
     const lbl = new SLabel({text: color});
 
-    red.render();
-    green.render();
+    document.body.appendChild(red.getHTMLElement());
+    document.body.appendChild(green.getHTMLElement());
     document.body.appendChild(document.createElement('div'));
-    lbl.render();
+    document.body.appendChild(lbl.getHTMLElement());
   }
 }
 
