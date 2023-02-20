@@ -1,14 +1,14 @@
 import { Cell, Operational, Stream, StreamSink, Transaction } from "sodiumjs";
 
 class STextField {
-  private textField: HTMLInputElement;
-  public text: Cell<string>;
-  public sUserChanges: Stream<string>;
+  private readonly textField: HTMLInputElement;
+  public readonly text: Cell<string>;
+  public readonly sUserChanges: Stream<string>;
 
   constructor({
     sText = new Stream<string>(),
     initText,
-    width,
+    width = 15,
     enabled = new Cell<boolean>(true)
   } : {
     sText?: Stream<string>,

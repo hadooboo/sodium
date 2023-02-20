@@ -1,8 +1,8 @@
-import { Cell, Operational, Stream, StreamSink, Transaction, Unit } from "sodiumjs";
+import { Cell, Operational, Stream, StreamSink, Transaction, Unit } from 'sodiumjs';
 
 class SButton {
-  private button: HTMLButtonElement;
-  public sClicked: Stream<Unit>;
+  private readonly button: HTMLButtonElement;
+  public readonly sClicked: Stream<Unit>;
 
   constructor({
     label,

@@ -6,10 +6,10 @@ class SDateField {
     'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
   ];
-  public date: Cell<Date>;
-  private yearComboBox: SComboBox<number>;
-  private monthComboBox: SComboBox<string>;
-  private dayComboBox: SComboBox<number>;
+  public readonly date: Cell<Date>;
+  private readonly yearComboBox: SComboBox<number>;
+  private readonly monthComboBox: SComboBox<string>;
+  private readonly dayComboBox: SComboBox<number>;
 
   constructor({
     cal = new Date()

@@ -1,14 +1,14 @@
 import { Cell, CellSink } from 'sodiumjs';
 
 class SComboBox<E = string|number> {
-  private comboBox: HTMLSelectElement;
-  public selectedItem: Cell<E>;
-  private item: CellSink<E>;
+  private readonly comboBox: HTMLSelectElement;
+  public readonly selectedItem: Cell<E>;
+  private readonly item: CellSink<E>;
 
   constructor({
-    items,
+    items = [],
   } : {
-    items: E[],
+    items?: E[],
   }) {
     this.comboBox = document.createElement('select');
     for (const e of items) {

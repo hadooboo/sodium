@@ -1,7 +1,7 @@
 import { Cell, Operational, Transaction } from "sodiumjs";
 
 class SLabel {
-  private span: HTMLSpanElement;
+  private readonly span: HTMLSpanElement;
 
   constructor({
     text
