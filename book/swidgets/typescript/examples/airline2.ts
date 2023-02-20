@@ -1,6 +1,6 @@
-import { Cell, Transaction } from 'sodiumjs';
-import SButton from '../swidgets/src/swidgets/SButton';
-import SDateField from '../swidgets/src/swidgets/SDateField';
+import { Cell, Transaction } from "sodiumjs";
+import SButton from "../swidgets/src/swidgets/SButton";
+import SDateField from "../swidgets/src/swidgets/SDateField";
 
 class Rule {
   public f: (a: Date, b: Date) => boolean;
@@ -14,9 +14,7 @@ class Rule {
   }
 
   and(other: Rule): Rule {
-    return new Rule(
-      (d, r) => this.f(d, r) && other.f(d, r)
-    );
+    return new Rule((d, r) => this.f(d, r) && other.f(d, r));
   }
 }
 
@@ -33,12 +31,12 @@ class Airline2 {
     const r2 = new Rule((d, r) => !this.unlucky(d) && !this.unlucky(r));
     const r = r1.and(r2);
     const valid = r.reify(dep.date, ret.date);
-    const ok = new SButton({label: 'OK', enabled: valid});
+    const ok = new SButton({ label: "OK", enabled: valid });
 
     document.body.appendChild(dep.getHTMLElement());
-    document.body.appendChild(document.createElement('div'));
+    document.body.appendChild(document.createElement("div"));
     document.body.appendChild(ret.getHTMLElement());
-    document.body.appendChild(document.createElement('div'));
+    document.body.appendChild(document.createElement("div"));
     document.body.appendChild(ok.getHTMLElement());
   }
 }

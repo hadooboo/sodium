@@ -4,7 +4,7 @@ import SSpinner from "./SSpinner";
 class SpinMe {
   public static main() {
     Transaction.run(() => {
-      const _ = new SSpinner({initialValue: 0});
+      const _ = new SSpinner({ initialValue: 0 });
     });
   }
 }

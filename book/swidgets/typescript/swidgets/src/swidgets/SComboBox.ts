@@ -1,18 +1,14 @@
-import { Cell, CellSink } from 'sodiumjs';
+import { Cell, CellSink } from "sodiumjs";
 
-class SComboBox<E = string|number> {
+class SComboBox<E = string | number> {
   private readonly comboBox: HTMLSelectElement;
   public readonly selectedItem: Cell<E>;
   private readonly item: CellSink<E>;
 
-  constructor({
-    items = [],
-  } : {
-    items?: E[],
-  }) {
-    this.comboBox = document.createElement('select');
+  constructor({ items = [] }: { items?: E[] }) {
+    this.comboBox = document.createElement("select");
     for (const e of items) {
-      const comboBoxOption = document.createElement('option');
+      const comboBoxOption = document.createElement("option");
       comboBoxOption.text = e.toString();
       comboBoxOption.value = e.toString();
       this.comboBox.add(comboBoxOption);
@@ -20,7 +16,7 @@ class SComboBox<E = string|number> {
 
     const initValue = this.comboBox.selectedOptions[0].value;
     this.item = new CellSink<E>((Number(initValue) || initValue) as E);
-    this.comboBox.addEventListener('change', (event: InputEvent) => {
+    this.comboBox.addEventListener("change", (event: InputEvent) => {
       if (event.target instanceof HTMLSelectElement) {
         const changedValue = event.target.selectedOptions[0].value;
         this.item.send((Number(changedValue) || changedValue) as E);

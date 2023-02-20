@@ -9,34 +9,34 @@ class STextField {
     sText = new Stream<string>(),
     initText,
     width = 15,
-    enabled = new Cell<boolean>(true)
-  } : {
-    sText?: Stream<string>,
-    initText: string,
-    width?: number,
-    enabled?: Cell<boolean>
+    enabled = new Cell<boolean>(true),
+  }: {
+    sText?: Stream<string>;
+    initText: string;
+    width?: number;
+    enabled?: Cell<boolean>;
   }) {
     const sUserChangesSnk = new StreamSink<string>();
     this.sUserChanges = sUserChangesSnk;
 
-    this.textField = document.createElement('input');
+    this.textField = document.createElement("input");
     this.textField.value = initText;
     this.textField.width = width;
-    this.textField.addEventListener('input', (event: InputEvent) => {
+    this.textField.addEventListener("input", (event: InputEvent) => {
       if (event.target instanceof HTMLInputElement) {
         sUserChangesSnk.send(event.target.value);
       }
     });
 
     this.text = sUserChangesSnk.orElse(sText).hold(initText);
-    sText.listen(text => {
+    sText.listen((text) => {
       this.textField.value = text;
     });
 
     Transaction.currentTransaction.post(0, () => {
       this.textField.disabled = !enabled.sample();
     });
-    Operational.updates(enabled).listen(b => {
+    Operational.updates(enabled).listen((b) => {
       this.textField.disabled = !b;
     });
   }
