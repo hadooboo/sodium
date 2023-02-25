@@ -22,6 +22,7 @@ import STextField from "../pump/STextField";
 import SButton from "../pump/SButton";
 import AccumulatePulsesPump from "./section6/AccumulatePulsesPump";
 import Formatters from "../pump/formatters";
+import ShowDollarsPump from "./section7/ShowDollarsPump";
 
 class Rectangle {
   public x: number;
@@ -105,8 +106,18 @@ class PumpFace {
       this.largeImgs[i] = images.get(`large${i}`);
     }
 
+    const presetLCDDiv = document.createElement("div");
+    this.presetLCD.listen((text) => {
+      PumpFace.drawSegments(193, 140, text, this.largeImgs, 5, presetLCDDiv);
+    });
+    document.body.appendChild(presetLCDDiv);
+    const saleCostLCDDiv = document.createElement("div");
+    this.saleCostLCD.listen((text) => {
+      PumpFace.drawSegments(517, 30, text, this.largeImgs, 5, saleCostLCDDiv);
+    });
+    document.body.appendChild(saleCostLCDDiv);
     const saleQuantityLCDDiv = document.createElement("div");
-    saleQuantityLCD.listen((text) => {
+    this.saleQuantityLCD.listen((text) => {
       PumpFace.drawSegments(
         517,
         120,
@@ -117,6 +128,21 @@ class PumpFace {
       );
     });
     document.body.appendChild(saleQuantityLCDDiv);
+    const priceLCD1Div = document.createElement("div");
+    this.priceLCD1.listen((text) => {
+      PumpFace.drawSegments(355, 230, text, this.smallImgs, 5, priceLCD1Div);
+    });
+    document.body.appendChild(priceLCD1Div);
+    const priceLCD2Div = document.createElement("div");
+    this.priceLCD2.listen((text) => {
+      PumpFace.drawSegments(485, 230, text, this.smallImgs, 5, priceLCD2Div);
+    });
+    document.body.appendChild(priceLCD2Div);
+    const priceLCD3Div = document.createElement("div");
+    this.priceLCD3.listen((text) => {
+      PumpFace.drawSegments(615, 230, text, this.smallImgs, 5, priceLCD3Div);
+    });
+    document.body.appendChild(priceLCD3Div);
 
     for (let i = 0; i < 3; i++) {
       this.nozzleImgs[i] = images.get(`nozzle${i + 1}`);
@@ -156,7 +182,7 @@ class PumpFace {
       div.removeChild(div.lastChild);
     }
     for (let i = 0; i < digits.length && i < noOfDigits; i++) {
-      const x = ox - 30 * (i + 1);
+      const x = ox - 25 * (i + 1);
       const digit = digits[digits.length - 1 - i];
       for (let j = 0; j < 8; j++) {
         if ((digit & (1 << j)) != 0) {
@@ -208,7 +234,11 @@ class PetrolPump {
     logicLabel.style.paddingRight = "20px";
     logicDiv.appendChild(logicLabel);
     const logicComboBox = new SComboBox<Pump>({
-      items: [new LifeCyclePump(), new AccumulatePulsesPump()],
+      items: [
+        new LifeCyclePump(),
+        new AccumulatePulsesPump(),
+        new ShowDollarsPump(),
+      ],
     });
     logicDiv.appendChild(logicComboBox.getHTMLElement());
     document.body.appendChild(logicDiv);
