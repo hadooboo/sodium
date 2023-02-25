@@ -14,9 +14,14 @@ import Key from "../pump/key";
 import UpDown from "../pump/updown";
 import Pump from "../pump/pump";
 import LifeCyclePump from "./section4/LifeCyclePump";
-import Outputs from "../pump/outputs";
 import Inputs from "../pump/inputs";
 import images from "./Images";
+import sounds from "./Sounds";
+import SComboBox from "../pump/SComboBox";
+import STextField from "../pump/STextField";
+import SButton from "../pump/SButton";
+import AccumulatePulsesPump from "./section6/AccumulatePulsesPump";
+import Formatters from "../pump/formatters";
 
 class Rectangle {
   public x: number;
@@ -151,7 +156,7 @@ class PumpFace {
       div.removeChild(div.lastChild);
     }
     for (let i = 0; i < digits.length && i < noOfDigits; i++) {
-      const x = ox - 25 * (i + 1);
+      const x = ox - 30 * (i + 1);
       const digit = digits[digits.length - 1 - i];
       for (let j = 0; j < 8; j++) {
         if ((digit & (1 << j)) != 0) {
@@ -178,10 +183,14 @@ class PetrolPump {
       () =>
         Transaction.run(() => {
           switch (view.delivery.sample()) {
-            case (Delivery.FAST1, Delivery.FAST2, Delivery.FAST3):
+            case Delivery.FAST1:
+            case Delivery.FAST2:
+            case Delivery.FAST3:
               view.sFuelPulses.send(40);
               break;
-            case (Delivery.SLOW1, Delivery.SLOW2, Delivery.SLOW3):
+            case Delivery.SLOW1:
+            case Delivery.SLOW2:
+            case Delivery.SLOW3:
               view.sFuelPulses.send(2);
               break;
           }
@@ -191,10 +200,43 @@ class PetrolPump {
   }
 
   constructor() {
-    // FIXME: add logic selection
-    const logic: Pump = new LifeCyclePump();
+    const logicDiv = document.createElement("div");
+    logicDiv.style.position = "absolute";
+    logicDiv.style.top = "500px";
+    const logicLabel = document.createElement("label");
+    logicLabel.innerText = "logic";
+    logicLabel.style.paddingRight = "20px";
+    logicDiv.appendChild(logicLabel);
+    const logicComboBox = new SComboBox<Pump>({
+      items: [new LifeCyclePump(), new AccumulatePulsesPump()],
+    });
+    logicDiv.appendChild(logicComboBox.getHTMLElement());
+    document.body.appendChild(logicDiv);
 
-    // TOOD: add textfields for price
+    const priceDiv = document.createElement("div");
+    priceDiv.style.position = "absolute";
+    priceDiv.style.top = "530px";
+    const price1Label = document.createElement("label");
+    price1Label.innerText = "price1";
+    price1Label.style.paddingRight = "20px";
+    priceDiv.appendChild(price1Label);
+    const textPrice1 = new STextField({ initText: "2.149", width: 7 });
+    priceDiv.appendChild(textPrice1.getHTMLElement());
+    const price2Label = document.createElement("label");
+    price2Label.innerText = "price2";
+    price2Label.style.paddingLeft = "20px";
+    price2Label.style.paddingRight = "20px";
+    priceDiv.appendChild(price2Label);
+    const textPrice2 = new STextField({ initText: "2.341", width: 7 });
+    priceDiv.appendChild(textPrice2.getHTMLElement());
+    const price3Label = document.createElement("label");
+    price3Label.innerText = "price3";
+    price3Label.style.paddingLeft = "20px";
+    price3Label.style.paddingRight = "20px";
+    priceDiv.appendChild(price3Label);
+    const textPrice3 = new STextField({ initText: "1.499", width: 7 });
+    priceDiv.appendChild(textPrice3.getHTMLElement());
+    document.body.appendChild(priceDiv);
 
     const parseDbl = (str: string) => Number(str) || 0.0;
 
@@ -209,15 +251,14 @@ class PetrolPump {
     }
 
     const calibration = new Cell<number>(0.001);
-    // FIXME: use input textfields
-    const price1 = new Cell<number>(2.149);
-    const price2 = new Cell<number>(2.341);
-    const price3 = new Cell<number>(1.499);
+    const price1 = textPrice1.text.map(parseDbl);
+    const price2 = textPrice2.text.map(parseDbl);
+    const price3 = textPrice3.text.map(parseDbl);
     const csClearSale = new CellSink<Stream<Unit>>(new Stream<Unit>());
     const sClearSale = Cell.switchS(csClearSale);
 
-    const outputs = new Cell<Outputs>(
-      logic.create(
+    const outputs = logicComboBox.selectedItem.map((pump) =>
+      pump.create(
         new Inputs(
           Operational.updates(nozzles[0]),
           Operational.updates(nozzles[1]),
@@ -243,7 +284,41 @@ class PetrolPump {
     const sBeep = Cell.switchS(outputs.map((o) => o.sBeep));
     const sSaleComplete = Cell.switchS(outputs.map((o) => o.sSaleComplete));
 
-    // TODO: add sounds
+    const beepClip = document.createElement("audio");
+    beepClip.src = sounds.get("beep");
+    beepClip.loop = true;
+    sBeep.listen((u) => {
+      beepClip.play();
+    });
+    const fastRumble = document.createElement("audio");
+    fastRumble.src = sounds.get("fast");
+    fastRumble.loop = true;
+    const slowRumble = document.createElement("audio");
+    slowRumble.src = sounds.get("slow");
+    slowRumble.loop = true;
+    Operational.value(this.delivery)
+      .snapshot(this.delivery, (neu, old) => (old == neu ? undefined : neu))
+      .filter((u) => u !== undefined)
+      .listen((d) => {
+        switch (d) {
+          case Delivery.FAST1:
+          case Delivery.FAST2:
+          case Delivery.FAST3:
+            fastRumble.play();
+            break;
+          default:
+            fastRumble.pause();
+        }
+        switch (d) {
+          case Delivery.SLOW1:
+          case Delivery.SLOW2:
+          case Delivery.SLOW3:
+            slowRumble.play();
+            break;
+          default:
+            slowRumble.pause();
+        }
+      });
 
     const face = new PumpFace(
       sClick,
@@ -272,7 +347,24 @@ class PetrolPump {
       );
     }
 
-    // TODO: add dialog
+    const dialog = document.createElement("dialog");
+    const message = document.createElement("div");
+    dialog.appendChild(message);
+    const button = new SButton({ label: "OK" });
+    csClearSale.send(button.sClicked);
+    button.sClicked.listen((u) => {
+      dialog.close();
+    });
+    dialog.appendChild(button.getHTMLElement());
+    document.body.appendChild(dialog);
+    sSaleComplete.listen((sale) => {
+      message.innerText = `Fuel ${sale.fuel.toString()}\nPrice ${Formatters.priceFmt.format(
+        sale.price
+      )}\nDollars delivered ${Formatters.costFmt.format(
+        sale.cost
+      )}\nLiters delivered ${Formatters.quantityFmt.format(sale.quantity)}`;
+      dialog.show();
+    });
   }
 
   private static format7Seg(

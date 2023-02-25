@@ -33,6 +33,10 @@ class LifeCyclePump implements Pump {
         )
       );
   }
+
+  public toString(): string {
+    return "LifeCyclePump";
+  }
 }
 
 export default LifeCyclePump;
